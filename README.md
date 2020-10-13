@@ -1,4 +1,3 @@
-
 ## Product options component
 
  Module to select quantity, color or size before adding an item to the registry.
@@ -21,7 +20,7 @@ Make sure to have MySQL installed then run `MySQL` then run the following in a M
 
 run `npm run seed`
 
-if getting any errors: 
+if getting any errors:
 
 
 `USE options;SET FOREIGN_KEY_CHECKS = 0;TRUNCATE TABLE Stocks;TRUNCATE TABLE Products;TRUNCATE TABLE Stores;`
