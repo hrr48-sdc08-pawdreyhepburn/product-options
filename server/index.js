@@ -135,7 +135,7 @@ app.post('/api/products', (req, res) => {
     price: req.body.price
   })
     .then((results) => {
-      console.log('Successfully added product');
+      console.log('Product added!');
       res.send(results);
     })
     .catch((err) => {
@@ -150,15 +150,34 @@ app.delete('/api/products', (req, res) => {
       id: req.body.id
     }
   })
-    .then((results) => {
-      console.log('Successfully deleted product');
-      res.json('Item deleted!');
+    .then(() => {
+      console.log('Product deleted!');
+      res.json('Product deleted!');
     })
     .catch((err) => {
       console.log(err);
-      res.send('Error creating new product.');
+      res.send('Error deleting new product.');
+    });
+});
+
+app.put('/api/products/:id', (req, res) => {
+  db.Product.update({
+    name: req.body.productName,
+    price: req.body.price
+  }, {
+    where: {
+      id: req.params.id
+    }
+  })
+    .then((updatedItem) => {
+      console.log('Product updated!')
+      res.send(updatedItem);
     })
-})
+    .catch((err) => {
+      console.log(err);
+      res.send('Error in updating product!')
+    })
+});
 
 app.listen(port, () => {
   console.log(`app listening at http://localhost:${port}`)
