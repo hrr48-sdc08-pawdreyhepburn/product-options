@@ -9,6 +9,7 @@ const { QueryTypes } = require('sequelize');
 const sequelize = require('./database/index.js');
 const cors = require('cors');
 
+app.use(express.json());
 app.use(cors());
 
 app.use(express.static(path.join(__dirname, '../client/public/dist')))
@@ -128,6 +129,20 @@ app.get('/api/products', (req, res) => {
     });
 });
 
+app.post('/api/products', (req, res) => {
+  db.Product.create({
+    name: req.body.productName,
+    price: req.body.price
+  })
+    .then((results) => {
+      console.log('Successfully added review');
+      res.send(results);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send('Error creating new product.');
+    });
+});
 
 app.listen(port, () => {
   console.log(`app listening at http://localhost:${port}`)
