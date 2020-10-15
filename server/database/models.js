@@ -12,7 +12,7 @@ const Product = db.define('Product', {
     allowNull: false
   },
   reviews: {
-   type: DataTypes.FLOAT,
+    type: DataTypes.FLOAT,
     defaultValue: 0
   },
   reviewCount: {
@@ -39,7 +39,7 @@ const Stock = db.define('Stock', {
     type: DataTypes.STRING
   },
   qty: {
-   type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER,
     defaultValue: 0
   }
 });
