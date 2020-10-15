@@ -144,10 +144,10 @@ app.post('/api/products', (req, res) => {
     });
 });
 
-app.delete('/api/products', (req, res) => {
+app.delete('/api/products/:id', (req, res) => {
   db.Product.destroy({
     where: {
-      id: req.body.id
+      id: req.params.id
     }
   })
     .then(() => {
