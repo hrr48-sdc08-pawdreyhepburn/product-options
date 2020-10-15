@@ -135,7 +135,7 @@ app.post('/api/products', (req, res) => {
     price: req.body.price
   })
     .then((results) => {
-      console.log('Successfully added review');
+      console.log('Successfully added product');
       res.send(results);
     })
     .catch((err) => {
@@ -143,6 +143,22 @@ app.post('/api/products', (req, res) => {
       res.send('Error creating new product.');
     });
 });
+
+app.delete('/api/products', (req, res) => {
+  db.Product.destroy({
+    where: {
+      id: req.body.id
+    }
+  })
+    .then((results) => {
+      console.log('Successfully deleted product');
+      res.json('Item deleted!');
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send('Error creating new product.');
+    })
+})
 
 app.listen(port, () => {
   console.log(`app listening at http://localhost:${port}`)
