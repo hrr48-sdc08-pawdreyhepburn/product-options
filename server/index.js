@@ -16,19 +16,19 @@ app.use(express.static(path.join(__dirname, '../client/public/dist')))
 
 // getting all products data from DB
 app.get('/products', async (req, res) => {
-    try {		
+    try {
       const data = await db.Product.findAll({
         attributes: {exclude: ['createdAt', 'updatedAt']}
       })
       res.send(data);
     } catch (e) {
     console.error(e)
-    } 
+    }
 })
 
 
 
-    
+
 
   // getting a specific product's data from the DB
 app.get('/products/:productId', async (req, res) => {
@@ -92,7 +92,7 @@ app.get('/stores/:storeId', async (req, res) => {
     attributes: {exclude: ['createdAt', 'updatedAt']}
   })
     res.send(data[0]);
-  })
+})
 
 
 
@@ -114,6 +114,21 @@ app.get('/stores/:storeId', async (req, res) => {
   //   })
 
 
-  app.listen(port, () => {
-    console.log(`app listening at http://localhost:${port}`)
-  });
+
+  // ------------------ added CRUD endpoints ------------------ //
+
+app.get('/api/products', (req, res) => {
+  db.Product.findAll()
+    .then((products) => {
+      res.send(products);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send('Error in getting all products.');
+    });
+});
+
+
+app.listen(port, () => {
+  console.log(`app listening at http://localhost:${port}`)
+});
