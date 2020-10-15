@@ -1,4 +1,4 @@
-## Product options component
+# Product options component
 
  Module to select quantity, color or size before adding an item to the registry.
 
@@ -6,9 +6,11 @@
 
 ------
 
-### Installation
+## Installation
 
-#### Server:
+### Server
+
+#### Setup
 
 Go into server folder
 
@@ -27,8 +29,17 @@ if getting any errors:
 
 run `npm run seed` again
 
+#### Endpoints
 
-#### Client:
+`/api/products`
+* GET all products
+* POST new product, needs `productName` and `price` keys in the request body
+
+`/api/products/:id`
+* DELETE product at that id
+* PUT product updates, needs `productName` and / or `price` keys in the request body
+
+## Client
 
 Go into client folder
 
