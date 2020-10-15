@@ -1,7 +1,8 @@
 const {Sequelize, DataTypes} = require('sequelize');
+const creds = require('./sqlAuth.js');
 
 const db = new Sequelize(
-  'options', 'root', '', {
+  'options', 'root', creds.SQLCREDS, {
     host: '127.0.0.1',
     // can try port number
     port: 3306,

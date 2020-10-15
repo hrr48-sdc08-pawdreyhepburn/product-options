@@ -9,6 +9,7 @@ const { QueryTypes } = require('sequelize');
 const sequelize = require('./database/index.js');
 const cors = require('cors');
 
+app.use(express.json());
 app.use(cors());
 
 app.use(express.static(path.join(__dirname, '../client/public/dist')))
@@ -16,19 +17,19 @@ app.use(express.static(path.join(__dirname, '../client/public/dist')))
 
 // getting all products data from DB
 app.get('/products', async (req, res) => {
-    try {		
+    try {
       const data = await db.Product.findAll({
         attributes: {exclude: ['createdAt', 'updatedAt']}
       })
       res.send(data);
     } catch (e) {
     console.error(e)
-    } 
+    }
 })
 
 
 
-    
+
 
   // getting a specific product's data from the DB
 app.get('/products/:productId', async (req, res) => {
@@ -92,7 +93,7 @@ app.get('/stores/:storeId', async (req, res) => {
     attributes: {exclude: ['createdAt', 'updatedAt']}
   })
     res.send(data[0]);
-  })
+})
 
 
 
@@ -114,6 +115,70 @@ app.get('/stores/:storeId', async (req, res) => {
   //   })
 
 
-  app.listen(port, () => {
-    console.log(`app listening at http://localhost:${port}`)
-  });
+
+  // ------------------ added CRUD endpoints ------------------ //
+
+app.get('/api/products', (req, res) => {
+  db.Product.findAll()
+    .then((products) => {
+      res.send(products);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send('Error in getting all products.');
+    });
+});
+
+app.post('/api/products', (req, res) => {
+  db.Product.create({
+    name: req.body.productName,
+    price: req.body.price
+  })
+    .then((results) => {
+      console.log('Product added!');
+      res.send(results);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send('Error creating new product.');
+    });
+});
+
+app.delete('/api/products/:id', (req, res) => {
+  db.Product.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+    .then(() => {
+      console.log('Product deleted!');
+      res.json('Product deleted!');
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send('Error deleting new product.');
+    });
+});
+
+app.put('/api/products/:id', (req, res) => {
+  db.Product.update({
+    name: req.body.productName,
+    price: req.body.price
+  }, {
+    where: {
+      id: req.params.id
+    }
+  })
+    .then((updatedItem) => {
+      console.log('Product updated!')
+      res.send(updatedItem);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send('Error in updating product!')
+    })
+});
+
+app.listen(port, () => {
+  console.log(`app listening at http://localhost:${port}`)
+});
