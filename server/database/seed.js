@@ -1,5 +1,10 @@
 // destructuring models into the specific tables
-const {Product, Stock, Store} = require('./models.js');
+
+// for MySQL, uncomment the following line:
+// const {Product, Stock, Store} = require('./models.js');
+
+// for Postgres, uncomment the following line:
+const {Product, Stock, Store} = require('./modelsPG.js');
 const faker = require('faker');
 
 // asynchronous anonymous function to populate the database
